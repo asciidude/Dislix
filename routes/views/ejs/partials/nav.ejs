@@ -1,0 +1,61 @@
+<nav class="navbar navbar-expand-lg bg-darker">
+    <div class="container-fluid">
+      <a href="/">
+        <img
+          src="/images/icon-transparent.png"
+          alt="Dislix Icon"
+          class="
+              rounded-circle
+              bg-dark
+          "
+          width="50"
+          height="50"
+        >
+      </a>
+
+      <button
+        class="
+          navbar-toggler
+          outline-0
+        "
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon">   
+            <i class="fas fa-bars" style="color:#fff; font-size:28px;"></i>
+        </span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+          <li class="nav-item">
+            <a class="nav-link text-white" aria-current="page" href="/">Servers</a>
+          </li>
+
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle text-white" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Account
+              </a>
+
+              <% if(user) { %>
+                <ul class="dropdown-menu bg-darkbl dropdown-menu-end">
+                  <li><a class="dropdown-item text-white" href="/<%- user.username %>">Profile</a></li>
+                  <li><a class="dropdown-item text-white" href="/update">Update profile</a></li>
+                  <li><hr class="dropdown-divider"></li>
+                  <li><a class="dropdown-item text-white" href="/create-server">Add a server</a></li>
+                </ul>
+              <% } else { %>
+                <ul class="dropdown-menu bg-darkbl dropdown-menu-end">
+                  <li><a class="dropdown-item text-white" href="/login">Login</a></li>
+                  <li><a class="dropdown-item text-white" href="/register">Register</a></li>
+                </ul>
+              <% } %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>

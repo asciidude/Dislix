@@ -1,0 +1,16 @@
+body {
+    font-family: 'Comic Sans', cursive;
+    background-color: #141414;
+    color: white;
+}
+
+.bg-darker {background-color: #161616}
+.bg-darkbl {background-color: #090909}
+.dropdown-menu .dropdown-item:hover {background-color: #121212}
+
+.navbar-toggler:focus,
+.navbar-toggler:active,
+.navbar-toggler-icon {
+    outline: none;
+    box-shadow: none;
+}
