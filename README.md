@@ -25,5 +25,5 @@
 </p>
 
 <p align="center">
-  I probably wont update this any further, lol
+  I probably wont update this README any further, lol
 </p>
