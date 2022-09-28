@@ -42,24 +42,29 @@ app.use(flash());
 mongoose.connect(
     process.env.MONGO_URI,
     (err) => {
-        if(err) return process.stderr.write(`[ERROR] Could not connect to MongoDB\n${err}\n`)
-        process.stdout.write('[SUCCESS] Connected to MongoDB');
+        if(err) return process.stderr.write(`[ERROR] Could not connect to MongoDB\n${err}\n`);
+        process.stdout.write('[SUCCESS] Connected to MongoDB\n');
     }
 )
 
 // 🙋‍♂️ Important Middleware //
-/* Verify the user exists */
-const User = require('./models/User.model');
+/* Verify the user exists or is not banned */
+/* This function should make it to where I don't have to check on login! :D */
+const verify = require('./utils/verify.util');
+
 app.use((req, res, next) => {
     if(req.isAuthenticated()) {
-        const user = User.findOneById(req.user._id);
-
-        if(!user || user.banned) {
-            req.flash('error', 'Your account has been deleted or banned');
+        // Verify account exists first
+        if(verify.exists(req.user)) {
+            req.flash('😢 Your account has been deleted.');
             next();
         }
 
-        next();
+        // ...then check if it has ever been banned
+        if(verify.banned(req.user)) {
+            req.flash('😬 Sorry, your account has been banned.');
+            next();
+        }
     }
 
     next();

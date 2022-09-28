@@ -12,9 +12,10 @@ const user = new Schema({
     avatar: String,
     /*banner: String,*/ // ?
     servers: Array,
-    servers_in: Array, // check if Administrator permission is applied, then call API
+    servers_in: Array, // check if Administrator permission is applied, then call API.. somehow
 
     banned: Boolean,
+    ban_expires: Date,
     ip_address: String
 });
 
