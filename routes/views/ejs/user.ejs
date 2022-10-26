@@ -14,7 +14,7 @@
             <div class="text-center">
                 <img
                     src="<%- profile.avatar %>"
-                    <% if(profile.avatar == null) { %> style="background: rgb(156, 171, 255);" <% } %>
+                    <% if(profile.avatar.startsWith('/')) { %> style="background: rgb(156, 171, 255);" <% } %>
                     class="rounded-circle"
                     width="150" height="150"
                 >

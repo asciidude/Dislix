@@ -61,7 +61,10 @@ app.use(async (req, res, next) => {
     if(req.isAuthenticated()) {
         // Verify account exists first
         if(!await verify.exists(req.user)) {
-            await req.logout();
+            await req.logout((err) => {
+                if(err) return next(err);
+            });
+            
             req.session = null;
     
             req.flash('err', '😢 Your account has been deleted.');
@@ -70,7 +73,10 @@ app.use(async (req, res, next) => {
     
         // ...then check if it has ever been banned
         if(await verify.banned(req.user)) {
-            await req.logout();
+            await req.logout((err) => {
+                if(err) return next(err);
+            });
+
             req.session = null;
     
             req.flash('err', '😬 Sorry, your account has been banned.');
