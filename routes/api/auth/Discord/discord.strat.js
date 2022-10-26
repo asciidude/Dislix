@@ -18,9 +18,9 @@ passport.use(new DiscordStrategy({
     callbackURL: process.env.CALLBACK_URL,
     scope: ['identify', 'email', 'guilds']
 }, async (accessToken, refreshToken, profile, done) => {
-    profile.refreshToken = refreshToken;
-    
     try {
+        profile.refreshToken = refreshToken;
+    
         // servers_owned refers to the servers owned by the user
         // servers refers to the servers the user has posted
         const foundUser = await User.findOne({ discordId: profile.id });

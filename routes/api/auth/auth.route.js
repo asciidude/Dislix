@@ -22,8 +22,11 @@ router.get('/redirect/discord', passport.authenticate('discord', {
     res.redirect('/');
 });
 
-router.get('/logout', authRequired, async (req, res) => {
-    await req.logout();
+router.get('/logout', authRequired, async (req, res, next) => {
+    await req.logout((err) => {
+        if(err) return next(err);
+    });
+
     req.session = null;
 
     req.flash('message', 'You have been logged out');
