@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img width=200px height=200px src="./routes/public/images/icon-transparent.png" alt="Dislix Icon"></a>
+ <img width=200px height=200px src="./routes/public/images/png/icon-transparent.png" alt="Dislix Icon"></a>
 </p>
 
 <h3 align="center">Dislix</h3>
