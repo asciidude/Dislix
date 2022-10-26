@@ -5,9 +5,9 @@ const User = require('../models/User.model');
  * @param {Object} user 
  * @returns 
  */
- module.exports.exists = (user) => {
+ module.exports.exists = async (user) => {
     // Verify if user exists
-    const userByID = User.findById(user._id);
+    const userByID = await User.find({ discordId: user.discordId });
     if(userByID) return true;
     else return false;
 }
@@ -17,9 +17,9 @@ const User = require('../models/User.model');
  * @param {Object} user 
  * @returns 
  */
-module.exports.banned = (user) => {
+module.exports.banned = async (user) => {
     let banned = false;
-    const userByIP = User.find({ ip_address: user.ip_address });
+    const userByIP = await User.find({ ip_address: user.ip_address });
     
     for(const user in userByIP) {
         if(user.banned && new Date(user.ban_expires) > new Date()) {

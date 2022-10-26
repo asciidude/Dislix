@@ -54,7 +54,34 @@ mongoose.connect(
 )
 
 // 🙋‍♂️ Important Middleware //
-/* Add default response locals */
+/* Verify the user exists or is not banned */
+const verify = require('./utils/verify.util');
+
+app.use(async (req, res, next) => {
+    if(req.isAuthenticated()) {
+        // Verify account exists first
+        if(!await verify.exists(req.user)) {
+            await req.logout();
+            req.session = null;
+    
+            req.flash('err', '😢 Your account has been deleted.');
+            return res.redirect('/');
+        }
+    
+        // ...then check if it has ever been banned
+        if(await verify.banned(req.user)) {
+            await req.logout();
+            req.session = null;
+    
+            req.flash('err', '😬 Sorry, your account has been banned.');
+            return res.redirect('/');
+        }
+    }
+
+    next();
+});
+
+/** Add default response locals */
 app.use((req, res, next) => {
     res.locals.user = req.user;
     res.locals.err = req.flash('err')[0];
@@ -62,29 +89,7 @@ app.use((req, res, next) => {
     next();
 });
 
-/* Verify the user exists or is not banned */
-const verify = require('./utils/verify.util');
-
-app.use((req, res, next) => {
-    if(req.isAuthenticated()) {
-        // Verify account exists first
-        if(!verify.exists(req.user)) {
-            req.logout();
-            req.flash('err', '😢 Your account has been deleted.');
-            next();
-        }
-
-        // ...then check if it has ever been banned
-        if(verify.banned(req.user)) {
-            req.logout();
-            req.flash('err', '😬 Sorry, your account has been banned.');
-            next();
-        }
-    }
-
-    next();
-});
-
+/** Restrict from authenticated users */
 module.exports.authRestricted = (req, res, next) => {
   try {
     if (req.isAuthenticated()) {
@@ -100,6 +105,7 @@ module.exports.authRestricted = (req, res, next) => {
   }
 }
 
+/** Restrict to authenticated users only */
 module.exports.authRequired = (req, res, next) => {
   try {
     if (!req.isAuthenticated()) {
