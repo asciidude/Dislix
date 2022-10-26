@@ -12,7 +12,10 @@ router.get('/redirect/discord', passport.authenticate('discord', {
 }), async (req, res) => {
     await User.updateOne(
         { discordId: req.user.discordId },
-        { ip_address: req.socket.remoteAddress }
+        { 
+            ip_address: req.ip.startsWith('::') // Detect if localhost
+                        ? null : req.ip
+        }
     );
 
     res.redirect('/');

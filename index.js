@@ -22,6 +22,7 @@ const path = require('path');
 
 // 🍎 Setup Express Server //
 const app = express();
+app.set('trust proxy', true);
 
 app.use(express.urlencoded({ extended: false }));
 app.set('views', path.join(__dirname, 'routes', 'views', 'ejs'));
@@ -61,6 +62,7 @@ app.use((req, res, next) => {
         // Verify account exists first
         if(!verify.exists(req.user)) {
             req.flash('err', '😢 Your account has been deleted.');
+            req.logout();
             next();
         }
 
