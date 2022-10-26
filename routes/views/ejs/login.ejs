@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <%- include('./partials/head.ejs') %>    
+    </head>
+
+    <body>
+        <%- include('./partials/nav.ejs') %>
+        
+        <div class="container text-white d-flex flex-column justify-content-center align-items-center" style="height: 90vh;">
+            <div class="container text-center">
+                <div id="space">
+                    <img src="/images/svg/space.svg" width="200">
+                    <div class="mt-3"></div>
+                </div>
+
+                <h2 class="fw-bold mb-0">Welcome!</h2>
+
+                <div class="mt-0"></div>
+
+                <sub class="fw-bold">This is still a work in progress, so bugs are expected.</sub>
+                <sub>Thank you for choosing Dislix.</sub>
+
+                <div class="mt-4"></div>
+
+                <% if(err) { %>
+                    <div class="error">
+                        <div class="error-header">
+                            <p class="mb-0">Oops! You could not be logged in.</p>
+                        </div>
+                        <div class="error-content">
+                            <div class="mt-2"></div>
+                            <%- err %>
+                            <div class="mt-0"></div>
+                            <sub>If this issue persists, contact <strong>asciidude#0001</strong></sub>
+                        </div>
+                    </div>
+                <% } %>
+
+                <div class="mt-4"></div>
+
+                <a
+                    class="rounded btn btn-primary"
+                    href="/auth/discord"
+                >
+                    <i class="fa-brands fa-discord me-2"></i>
+                    Login with Discord
+                </a>
+            </div>
+        </div>
+    </body>
+</html>
+
+<!-- Breaks @ 454x577px -->
+<style>
+    @media only screen and (max-height: 554px) {
+        #space {
+            display: none;
+        }
+    }
+</style>

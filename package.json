@@ -18,7 +18,7 @@
     "express": "^4.18.1",
     "express-rate-limit": "^6.6.0",
     "mongoose": "^6.6.1",
-    "passport": "^0.6.0",
+    "passport": "0.5.x",
     "passport-discord": "^0.1.4"
   }
 }

@@ -31,7 +31,8 @@ app.set('view engine', 'ejs');
 app.use(require('cookie-parser')());
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    cookieAge: 1000 * 60 * 60 * 24 * 7 // 7 days
+    cookieAge: 1000 * 60 * 60 * 24 * 1, // 1 day
+    secure: true
 }));
 
 app.use(passport.initialize());
@@ -49,20 +50,19 @@ mongoose.connect(
 
 // 🙋‍♂️ Important Middleware //
 /* Verify the user exists or is not banned */
-/* This function should make it to where I don't have to check on login! :D */
 const verify = require('./utils/verify.util');
 
 app.use((req, res, next) => {
     if(req.isAuthenticated()) {
         // Verify account exists first
         if(verify.exists(req.user)) {
-            req.flash('😢 Your account has been deleted.');
+            req.flash('err', '😢 Your account has been deleted.');
             next();
         }
 
         // ...then check if it has ever been banned
         if(verify.banned(req.user)) {
-            req.flash('😬 Sorry, your account has been banned.');
+            req.flash('err', '😬 Sorry, your account has been banned.');
             next();
         }
     }
@@ -70,8 +70,48 @@ app.use((req, res, next) => {
     next();
 });
 
-// 👉 Routing //
+module.exports.authRestricted = (req, res, next) => {
+  try {
+    if (req.isAuthenticated()) {
+        req.redirect('/');
+        next();
+    } else {
+        next();
+    }
+  } catch(err) {
+    res.status(401).json({
+        message: 'Invalid request!',
+        error: err
+    });
+
+    next();
+  }
+}
+
+module.exports.authRequired = (req, res, next) => {
+  try {
+    if (!req.isAuthenticated()) {
+        req.redirect('/login');
+        next();
+    } else {
+        next();
+    }
+  } catch(err) {
+    res.status(401).json({
+        message: 'Invalid request!',
+        error: err
+    });
+
+    next();
+  }
+}
+
+// 👉 Views Routing //
 app.use(require('./routes/views/views.route'));
+
+// 🤖 API Routing //
+/* Authentication */
+app.use('/auth', require('./routes/api/auth/auth.route'));
 
 // 👂 Listen to app //
 app.listen(

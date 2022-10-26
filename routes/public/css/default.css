@@ -6,6 +6,25 @@ body {
     color: white;
 }
 
+.error-header {
+    color: rgb(80, 0, 0);
+    padding-top: 5px;
+    padding-bottom: 8px;
+    border-radius: 10px 10px 0 0;
+    background: #ff3030;
+    font-weight: bold;
+}
+
+.error {
+    border-style: solid;
+    border-color: #ff3030;
+
+    background: #ff4343;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    color: white;
+}
+
 .bg-darker {background-color: #161616}
 .bg-darkbl {background-color: #090909}
 .dropdown-menu .dropdown-item:hover {background-color: #121212}
