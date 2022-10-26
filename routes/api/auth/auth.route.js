@@ -11,13 +11,12 @@ router.get('/discord', passport.authenticate('discord'));
 router.get('/redirect/discord', passport.authenticate('discord', {
     failureRedirect: '/login'
 }), async (req, res) => {
-    await User.updateOne(
-        { discordId: req.user.discordId },
-        { 
-            ip_address: req.ip.startsWith('::') // Detect if localhost
-                        ? null : req.ip
-        }
-    );
+    if(req.ip && req.ip.startsWith('::')) {
+        await User.updateOne(
+            { discordId: req.user.discordId },
+            { ip_address: req.ip }
+        );
+    }
 
     res.redirect('/');
 });
