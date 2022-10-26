@@ -59,7 +59,7 @@ const verify = require('./utils/verify.util');
 app.use((req, res, next) => {
     if(req.isAuthenticated()) {
         // Verify account exists first
-        if(verify.exists(req.user)) {
+        if(!verify.exists(req.user)) {
             req.flash('err', '😢 Your account has been deleted.');
             next();
         }
@@ -67,6 +67,7 @@ app.use((req, res, next) => {
         // ...then check if it has ever been banned
         if(verify.banned(req.user)) {
             req.flash('err', '😬 Sorry, your account has been banned.');
+            req.logout();
             next();
         }
     }
