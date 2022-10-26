@@ -27,5 +27,3 @@
 <p align="center">
   I probably wont update this README any further, lol
 </p>
-
-<sub>Note to self: Dislix color is #4B92FF</sub>

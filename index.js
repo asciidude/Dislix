@@ -15,7 +15,7 @@ const mongoose = require('mongoose');
 const express = require('express');
 
 const passport = require('passport');
-const session = require('cookie-session');
+const session = require('express-session');
 const flash = require('connect-flash');
 
 const path = require('path');
@@ -31,8 +31,12 @@ app.set('view engine', 'ejs');
 app.use(require('cookie-parser')());
 app.use(session({
     secret: process.env.SESSION_SECRET,
-    cookieAge: 1000 * 60 * 60 * 24 * 1, // 1 day
-    secure: true
+    saveUninitialized: true,
+    resave: true,
+    cookie: {
+        maxAge: 1000 * 60 * 60 * 24, // 1 day
+        secure: false
+    }
 }));
 
 app.use(passport.initialize());
@@ -74,10 +78,9 @@ module.exports.authRestricted = (req, res, next) => {
   try {
     if (req.isAuthenticated()) {
         req.redirect('/');
-        next();
-    } else {
-        next();
     }
+
+    next();
   } catch(err) {
     res.status(401).json({
         message: 'Invalid request!',
@@ -92,10 +95,9 @@ module.exports.authRequired = (req, res, next) => {
   try {
     if (!req.isAuthenticated()) {
         req.redirect('/login');
-        next();
-    } else {
-        next();
     }
+
+    next();
   } catch(err) {
     res.status(401).json({
         message: 'Invalid request!',

@@ -26,7 +26,7 @@ module.exports.banned = (user) => {
  */
 module.exports.exists = (user) => {
     // Verify if user exists
-    const userByID = User.findById(req.user._id);
+    const userByID = User.findById(user._id);
     if(userByID) return true;
     else return false;
 }
