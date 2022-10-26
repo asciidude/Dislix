@@ -44,8 +44,9 @@ passport.use(new DiscordStrategy({
                 createdAt: profile.fetchedAt,
             
                 // Profile data
-                avatar: profile.avatar,
+                avatar: profile.avatar ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png` : '/images/svg/male-avatar.svg',
                 banner: profile.banner,
+                bannerColor: profile.banner_color || '4B92FF',
                 servers: [],
                 servers_owned: serversOwned,
             
@@ -69,9 +70,9 @@ passport.use(new DiscordStrategy({
                 discriminator: profile.discriminator,
                 email: profile.email,
             
-                avatar: profile.avatar,
+                avatar: profile.avatar ? `https://cdn.discordapp.com/avatars/${profile.id}/${profile.avatar}.png` : '/images/svg/male-avatar.svg',
                 banner: profile.banner,
-                bannerColor: profile.banner_color,
+                bannerColor: profile.banner_color || '4B92FF',
                 servers_owned: serversOwned
             });
 

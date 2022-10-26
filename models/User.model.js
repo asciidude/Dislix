@@ -11,7 +11,7 @@ const user = new Schema({
     createdAt: Date,
 
     // Profile data
-    avatar: String,
+    avatar: String, // https://cdn.discordapp.com/avatars/<USER_ID>/<AVATAR_ID>.png
     banner: String,
     banner_color: String,
     servers: Array,

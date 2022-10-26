@@ -8,22 +8,10 @@
         <%- include('./partials/nav.ejs') %>
 
         <div class="mt-4 ms-4 me-4 mb-4">
-            <% if(err) { %>
-                <div class="error mb-4 text-center">
-                    <div class="error-header">
-                        <p class="mb-0">Oops! There was an error.</p>
-                    </div>
-                    <div class="error-content">
-                        <div class="mt-2"></div>
-                        <%- err %>
-                        <div class="mt-0"></div>
-                        <sub>If this issue persists, contact <strong>asciidude#0001</strong></sub>
-                    </div>
-                </div>
-            <% } %>
+            <%- include('./partials/error.ejs') %>
+            <%- include('./partials/message.ejs') %>
 
-
-            <p class="text-muted">Sorted by trending to least trending</p>
+            <p class="text-muted">Sorted by most trending to least trending</p>
         </div>
     </body>
 </html>

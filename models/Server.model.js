@@ -1,7 +1,5 @@
 const { Schema, model } = require('mongoose');
 
-// Get all of this from a bot
-// /guilds/<GUILD_ID>
 const server = new Schema({
     owner_id: String,
     poster: String, // ID
@@ -19,3 +17,5 @@ const server = new Schema({
     emojis: Array,
     roles: Array
 });
+
+module.exports = model('User', user);

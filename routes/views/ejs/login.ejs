@@ -23,19 +23,8 @@
 
                 <div class="mt-4"></div>
 
-                <% if(err) { %>
-                    <div class="error text-center">
-                        <div class="error-header">
-                            <p class="mb-0">Oops! You could not be logged in.</p>
-                        </div>
-                        <div class="error-content">
-                            <div class="mt-2"></div>
-                            <%- err %>
-                            <div class="mt-0"></div>
-                            <sub>If this issue persists, contact <strong>asciidude#0001</strong></sub>
-                        </div>
-                    </div>
-                <% } %>
+                <%- include('./partials/error.ejs') %>
+                <%- include('./partials/message.ejs') %>
 
                 <div class="mt-4"></div>
 

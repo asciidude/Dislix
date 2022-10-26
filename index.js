@@ -4,7 +4,7 @@
  * intended for ease-of-use and vanity links.
  * 
  * Vanity:
- * app.get('/servers/:vanity') or app.get('/:vanity') - restricting some things
+ * app.get('/servers/:vanity') or app.get('/:vanity')
  */
 
 require('dotenv').config();
@@ -54,6 +54,14 @@ mongoose.connect(
 )
 
 // 🙋‍♂️ Important Middleware //
+/* Add default response locals */
+app.use((req, res, next) => {
+    res.locals.user = req.user;
+    res.locals.err = req.flash('err')[0];
+    res.locals.message = req.flash('message')[0];
+    next();
+});
+
 /* Verify the user exists or is not banned */
 const verify = require('./utils/verify.util');
 
@@ -61,15 +69,15 @@ app.use((req, res, next) => {
     if(req.isAuthenticated()) {
         // Verify account exists first
         if(!verify.exists(req.user)) {
-            req.flash('err', '😢 Your account has been deleted.');
             req.logout();
+            req.flash('err', '😢 Your account has been deleted.');
             next();
         }
 
         // ...then check if it has ever been banned
         if(verify.banned(req.user)) {
-            req.flash('err', '😬 Sorry, your account has been banned.');
             req.logout();
+            req.flash('err', '😬 Sorry, your account has been banned.');
             next();
         }
     }
@@ -80,34 +88,30 @@ app.use((req, res, next) => {
 module.exports.authRestricted = (req, res, next) => {
   try {
     if (req.isAuthenticated()) {
-        req.redirect('/');
+        return res.redirect('/');
     }
 
     next();
   } catch(err) {
-    res.status(401).json({
-        message: 'Invalid request!',
-        error: err
+    return res.status(401).json({
+        message: '[AuthRestricted] Invalid request!',
+        error: err.toString()
     });
-
-    next();
   }
 }
 
 module.exports.authRequired = (req, res, next) => {
   try {
     if (!req.isAuthenticated()) {
-        req.redirect('/login');
+        return res.redirect('/login');
     }
 
     next();
   } catch(err) {
-    res.status(401).json({
-        message: 'Invalid request!',
-        error: err
+    return res.status(401).json({
+        message: '[AuthRequired] Invalid request!',
+        error: err.toString()
     });
-
-    next();
   }
 }
 

@@ -3,6 +3,7 @@ require('./Discord/discord.strat');
 const { Router } = require('express');
 const passport = require('passport');
 const User = require('../../../models/User.model');
+const { authRequired, authRestricted } = require('../../..');
 const router = Router();
 
 // Discord
@@ -19,6 +20,12 @@ router.get('/redirect/discord', passport.authenticate('discord', {
     );
 
     res.redirect('/');
+});
+
+router.get('/logout', authRequired, async (req, res) => {
+    await req.logout();
+    req.flash('message', 'You have been logged out');
+    req.redirect('/');
 });
 
 module.exports = router;

@@ -8,6 +8,10 @@
         <%- include('./partials/nav.ejs') %>
 
         <div class="mt-4 ms-4 me-4 mb-4">
+            <%- include('./partials/error.ejs') %>
+            <%- include('./partials/message.ejs') %>
+
+            <img src="<%- profile.avatar %>" class="rounded-circle" width="250" height="250">
             <p><%- profile.username %></p>
         </div>
     </body>
