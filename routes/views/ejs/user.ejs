@@ -6,6 +6,21 @@
 
     <body>
         <%- include('./partials/nav.ejs') %>
+        <% 
+            const unpostedServers = user.servers_owned.filter(el => {
+                return user.servers.every(f => {
+                    return f.id !== el.id;
+                });
+            }); 
+        %>
+
+        <% 
+            const postedServers = user.servers_owned.filter(el => {
+                return user.servers.every(f => {
+                    return f.id === el.id;
+                });
+            }); 
+        %>
 
         <div class="mt-4 ms-4 me-4 mb-4">
             <%- include('./partials/error.ejs') %>
@@ -15,15 +30,59 @@
                 <img
                     src="<%- profile.avatar %>"
                     <% if(profile.avatar.startsWith('/')) { %> style="background: rgb(156, 171, 255);" <% } %>
-                    class="rounded-circle"
+                    class="rounded-circle shadow-sm"
                     width="150" height="150"
                 >
     
-                <p class="fw-bold">
+                <p class="fw-bold mt-2">
                     <%- profile.username %>
                     <small class="text-muted">#<%- profile.discriminator %></small>
                 </p>
             </div>
+
+            <% if(profile.id === user.id && postedServers.length > 0) { %>
+                <div class="container">
+                    <h3 class="fw-bold">Posted Servers</h3>
+
+                </div>
+            <% } %>
+
+            <% if(profile.id === user.id && unpostedServers.length > 0) { %>
+                <div class="container">
+                    <h3 class="fw-bold">Unposted Servers</h3>
+
+                    <div class="row">
+                        <% for(unposted of unpostedServers) { %>
+                            <% if(posted.id !== unposted.id) { %>
+                                <div class="col-2">
+                                    <div class="card bg-dark border-0 rounded">
+                                        <div class="card-body text-center">
+                                            <% if(unposted.icon) { %>
+                                                <img
+                                                    src="https://cdn.discordapp.com/icons/<%- unposted.id %>/<%- unposted.icon %>.png"
+                                                    class="rounded-circle"
+                                                    width="100" height="100"
+                                                >
+                                            <% } else { %>
+                                                <img
+                                                    src="/images/svg/no-image.png"
+                                                    class="rounded-circle"
+                                                    width="100" height="100"
+                                                >
+                                            <% } %>
+
+                                            <p class="card-title fw-bold"><%- unposted.name %></p>
+                                            <a href="#" class="btn btn-primary">Post Server</a>
+                                        </div>
+                                    </div>
+
+                                    <div class="mb-2"></div>
+                                </div>
+                            <% } %>
+                        <% } %>
+                    </div>
+                </div>
+            <% } %>
         </div>
     </body>
 </html>
