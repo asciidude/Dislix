@@ -7,7 +7,7 @@
 
 <div align="center">
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![Status](https://img.shields.io/badge/status-inactive-red.svg)]()
 [![Platform](https://img.shields.io/badge/platform-discord-blue.svg)](https://discord.gg/6VqZYBXJyT)
 [![GitHub Issues](https://img.shields.io/github/issues/asciidude/Dislix.svg)](https://github.com/asciidude/Dislix/issues)
 [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/asciidude/Dislix.svg)](https://github.com/asciidude/Dislix/pulls)
